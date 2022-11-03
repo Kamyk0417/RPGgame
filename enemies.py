@@ -18,26 +18,22 @@ class Enemy:
         self.speed = speed
         self.name = name
 
-    def attack(self):
-        print(f"{self.name} attacked for {self.atk} dmg")
-        return self.atk
-
     def take_dmg(self, dmg):
         if dmg < self.hp:
             self.hp -= dmg
             print(f"You damaged {self.name} for {dmg} damage. {self.hp} hp remaining")
         else:
             print(f"{self.name} is dead")
-            alive = False
+            self.alive = False
 
 
 class Goblin(Enemy):
     desc = "Goblin\nSome filty and greedy creature"
+    difficulty = 1
 
-    def __init__(self, hp=3, atk=4, speed=1):
+    def __init__(self, hp=3, atk=3, speed=1):
         super().__init__("Goblin", hp, atk, speed)
 
-    @cls_stats
     def appear(self, level):
         print(f"A level {level} goblin just appeared! Prepare yourself!")
         self.hp += (level - 1) * 3
@@ -54,10 +50,6 @@ class Goblin(Enemy):
             loot2 = {"gold": randint(5, 20)}
             loot2.update({i: pos_loot["Goblin"][i] for i in loot})
             print(loot2)
-
-
-
-
 
 
 
