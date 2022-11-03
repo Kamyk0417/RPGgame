@@ -1,4 +1,5 @@
 import os
+import pandas as pd
 
 #clearing console decorator
 clear = lambda: os.system("cls")
@@ -18,7 +19,7 @@ def lvlstats():
 
 
 class Player:
-
+    game_over = False
     def __init__(self, name, level=1, exp=0, hp=50, mana=50, gold=0, stats={"strength":5, "agility":3, "intellect":0, "charisma":0, "luck":0}, eq={}):
         self.name = name
         self.level = level
@@ -29,8 +30,11 @@ class Player:
         self.eq = eq
         self.stats = stats
 
+    @cls_stats
     def show_stats(self):
-        return {"level": self.level, "exp": self.exp, "hp": self.hp}
+        stats_ds = [["name", "level", "exp", "hp", "mana", "gold"], [self.name, self.level, self.exp, self.hp, self.mana, self.gold]]
+        stats_pd = pd.DataFrame(stats_ds)
+        print("\n", stats_pd)
 
     def xp_gain(self, gain):
         lvls = lvlstats()
@@ -49,9 +53,5 @@ class Player:
             self.hp -= dmg
             print(f"You got damaged for {dmg} hp - now you have {self.hp} hp")
         else:
-            print("You died")
-            game_over = True
-
-    def deal_dmg(self):
-        print(f"I attacked for {self.stats[0]} dmg")
-        return self.stats[0]
+            print("YOU DIED, GAME OVER")
+            self.game_over = True
